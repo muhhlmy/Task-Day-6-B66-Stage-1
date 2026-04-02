@@ -268,24 +268,31 @@ projectContainer.addEventListener("click", function (event) {
 searchProjectInput.addEventListener("input", function (e) {
   const keyword = e.target.value.toLowerCase(); // Mengambil value pada Input dan Mengubah menjadi Lower Case
 
-  // Melakukan Filter menyesuaikan nama object yang sama dengan keyword
-  filteredObject = projectDataList.filter((projectItem) =>
-    projectItem.name.toLowerCase().includes(keyword),
-  );
-
-  // Jika keyword tidak Ditemukan
-  if (filteredObject.length === 0) {
-    projectContainer.innerHTML = /* HTML */ `
-      <h5 class="text-center text-secondary w-100 mt-5">
-        Project tidak Ditemukan
-      </h5>
-    `;
+  // Kalo Keyword tidak ada Value
+  if (keyword === "") {
+    renderProjectList();
     return;
   } else {
-    // Jika keyword ditemukan
-    projectContainer.innerHTML = filteredObject
-      .map((projectItem) => createProjectCard(projectItem))
-      .join("");
+    // Jika ada Value pada Keyword
+    // Melakukan Filter menyesuaikan nama object yang sama dengan keyword
+    const filteredObject = projectDataList.filter((projectItem) =>
+      projectItem.name.toLowerCase().includes(keyword),
+    );
+
+    // Jika keyword tidak Ditemukan
+    if (filteredObject.length === 0) {
+      projectContainer.innerHTML = /* HTML */ `
+        <h5 class="text-center text-secondary w-100 mt-5">
+          Project tidak Ditemukan
+        </h5>
+      `;
+      return;
+    } else {
+      // Jika keyword ditemukan
+      projectContainer.innerHTML = filteredObject
+        .map((projectItem) => createProjectCard(projectItem))
+        .join("");
+    }
   }
 });
 
